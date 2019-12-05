@@ -66,9 +66,11 @@ class Blockchain(object):
 
         # TODO: Create the block_string
         block_string = json.dumps(block, sort_keys=True).encode()
+        print("block_string::: ", block_string)
 
         # TODO: Hash this string using sha256
         hash = hashlib.sha256(block_string).hexdigest()
+        print("hash::: ", hash)
 
         # By itself, the sha256 function returns the hash in a raw string
         # that will likely include escaped characters.
@@ -136,11 +138,9 @@ def mine():
     previous_hash = blockchain.hash(blockchain.last_block)
     new_block = blockchain.new_block(proof, previous_hash)
 
-    response = {
-        'block': new_block
-    }
+    message = 'New Block Forged'
 
-    return jsonify(response), 200
+    return jsonify(message), 200
 
 
 @app.route('/chain', methods=['GET'])
@@ -154,4 +154,4 @@ def full_chain():
 
 # Run the program on port 5000
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
